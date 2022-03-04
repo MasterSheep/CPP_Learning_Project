@@ -84,11 +84,10 @@ void timer(const int step)
         */
         for (auto iter = move_queue.begin(); iter != move_queue.end();)
         {
-            auto* tmp = (*iter);
             if ((*iter)->move())
             {
+                delete (*iter);
                 iter = move_queue.erase(iter);
-                delete tmp;
             }
             else
             {
