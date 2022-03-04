@@ -34,7 +34,10 @@ WaypointQueue Tower::get_instructions(Aircraft& aircraft)
         }
         else
         {
-            return get_circle();
+            // GL::display_queue.erase(&aircraft);
+            // GL::move_queue.erase(&aircraft);
+            // std::cout << "Ici !" << std::endl;
+            return {};
         }
     }
     else

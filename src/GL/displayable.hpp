@@ -1,8 +1,12 @@
 #pragma once
 
+#include <algorithm>
 #include <vector>
 
 namespace GL {
+
+class Displayable;
+inline std::vector<const Displayable*> display_queue;
 
 // a displayable object can be displayed and has a z-coordinate indicating who
 // is displayed before whom ;]
@@ -14,7 +18,10 @@ protected:
 
 public:
     Displayable(const float z_) : z { z_ } {}
-    virtual ~Displayable() {}
+    virtual ~Displayable()
+    {
+        display_queue.erase(std::find(display_queue.begin(), display_queue.end(), this));
+    }
 
     virtual void display() const = 0;
 
@@ -30,7 +37,5 @@ struct disp_z_cmp
         return (az == bz) ? (a > b) : (az > bz);
     }
 };
-
-inline std::vector<const Displayable*> display_queue;
 
 } // namespace GL

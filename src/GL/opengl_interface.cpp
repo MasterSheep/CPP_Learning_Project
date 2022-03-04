@@ -75,9 +75,25 @@ void timer(const int step)
 {
     if (!pause)
     {
+        /*
         for (auto& item : move_queue)
         {
-            item->move();
+            if (item->move())
+                std::cout << "mort" << std::endl;
+        }
+        */
+        for (auto iter = move_queue.begin(); iter != move_queue.end();)
+        {
+            auto* tmp = (*iter);
+            if ((*iter)->move())
+            {
+                iter = move_queue.erase(iter);
+                delete tmp;
+            }
+            else
+            {
+                ++iter;
+            }
         }
     }
     glutPostRedisplay();

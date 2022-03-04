@@ -6,7 +6,7 @@
 
 #include <cassert>
 
-class Terminal : public GL::DynamicObject
+class Terminal
 {
 private:
     unsigned int service_progress    = SERVICE_CYCLES;
@@ -39,7 +39,7 @@ public:
         }
     }
 
-    void move() override
+    void move()
     {
         if (in_use() && is_servicing())
         {
