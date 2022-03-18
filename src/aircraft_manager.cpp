@@ -1,8 +1,8 @@
 #include "aircraft_manager.hpp"
 
-void AircraftManager::addAirCraft(Aircraft* aircraft)
+void AircraftManager::addAirCraft(std::unique_ptr<Aircraft> aircraft)
 {
-    aircrafts.emplace(aircraft);
+    aircrafts.emplace_back(std::move(aircraft));
 }
 
 bool AircraftManager::move()
@@ -11,7 +11,6 @@ bool AircraftManager::move()
     {
         if ((*iter)->move())
         {
-            delete (*iter);
             iter = aircrafts.erase(iter);
         }
         else

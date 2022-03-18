@@ -2,6 +2,7 @@
 
 #include "GL/opengl_interface.hpp"
 #include "aircraft.hpp"
+#include "aircraft_factory.hpp"
 #include "aircraft_manager.hpp"
 #include "airport.hpp"
 #include "config.hpp"
@@ -40,9 +41,9 @@ void TowerSimulation::create_aircraft(const AircraftType& type) const
     const Point3D start     = Point3D { std::sin(angle), std::cos(angle), 0 } * 3 + Point3D { 0, 0, 2 };
     const Point3D direction = (-start).normalize();
 
-    Aircraft* aircraft = new Aircraft { type, flight_number, start, direction, airport->get_tower() };
+    auto aircraft = std::make_unique<Aircraft>(type, flight_number, start, direction, airport->get_tower());
     // GL::display_queue.emplace_back(aircraft);
-    aircraft_manager->addAirCraft(aircraft);
+    aircraft_manager->addAirCraft(std::move(aircraft));
     // GL::move_queue.emplace(aircraft);
 }
 
