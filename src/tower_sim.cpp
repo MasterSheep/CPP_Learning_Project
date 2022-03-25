@@ -29,7 +29,7 @@ TowerSimulation::~TowerSimulation()
     delete airport;
 }
 
-void TowerSimulation::create_random_aircraft() const
+void TowerSimulation::create_random_aircraft()
 {
     assert(airport); // make sure the airport is initialized before creating aircraft
     auto aircraft = aircraft_factory.create_aircraft(this->airport);
@@ -38,7 +38,7 @@ void TowerSimulation::create_random_aircraft() const
     // GL::move_queue.emplace(aircraft);
 }
 
-void TowerSimulation::create_keystrokes() const
+void TowerSimulation::create_keystrokes()
 {
     GL::keystrokes.emplace('x', []() { GL::exit_loop(); });
     GL::keystrokes.emplace('q', []() { GL::exit_loop(); });
