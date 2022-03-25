@@ -2,7 +2,6 @@
 
 #include "GL/opengl_interface.hpp"
 #include "aircraft.hpp"
-#include "aircraft_factory.hpp"
 #include "aircraft_manager.hpp"
 #include "airport.hpp"
 #include "config.hpp"
@@ -14,8 +13,6 @@
 #include <ctime>
 
 using namespace std::string_literals;
-
-const std::string airlines[8] = { "AF", "LH", "EY", "DL", "KL", "BA", "AY", "EY" };
 
 TowerSimulation::TowerSimulation(int argc, char** argv) :
     help { (argc > 1) && (std::string { argv[1] } == "--help"s || std::string { argv[1] } == "-h"s) }
@@ -32,24 +29,13 @@ TowerSimulation::~TowerSimulation()
     delete airport;
 }
 
-void TowerSimulation::create_aircraft(const AircraftType& type) const
+void TowerSimulation::create_random_aircraft() const
 {
     assert(airport); // make sure the airport is initialized before creating aircraft
-
-    const std::string flight_number = airlines[std::rand() % 8] + std::to_string(1000 + (rand() % 9000));
-    const float angle       = (rand() % 1000) * 2 * 3.141592f / 1000.f; // random angle between 0 and 2pi
-    const Point3D start     = Point3D { std::sin(angle), std::cos(angle), 0 } * 3 + Point3D { 0, 0, 2 };
-    const Point3D direction = (-start).normalize();
-
-    auto aircraft = std::make_unique<Aircraft>(type, flight_number, start, direction, airport->get_tower());
+    auto aircraft = aircraft_factory.create_aircraft(this->airport);
     // GL::display_queue.emplace_back(aircraft);
     aircraft_manager->addAirCraft(std::move(aircraft));
     // GL::move_queue.emplace(aircraft);
-}
-
-void TowerSimulation::create_random_aircraft() const
-{
-    create_aircraft(*(aircraft_types[rand() % 3]));
 }
 
 void TowerSimulation::create_keystrokes() const
@@ -92,7 +78,6 @@ void TowerSimulation::init_airport()
 void TowerSimulation::init_aircraft()
 {
     aircraft_manager = new AircraftManager {};
-
     GL::move_queue.emplace(aircraft_manager);
 }
 
@@ -106,7 +91,7 @@ void TowerSimulation::launch()
 
     init_airport();
     init_aircraft();
-    init_aircraft_types();
+    aircraft_factory.init_aircraft_types();
 
     GL::loop();
 }
