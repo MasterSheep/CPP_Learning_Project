@@ -26,3 +26,8 @@ void AircraftFactory::init_aircraft_types()
     aircraft_types[1] = new AircraftType { .02f, .05f, .02f, MediaPath { "b707_jat.png" } };
     aircraft_types[2] = new AircraftType { .02f, .10f, .02f, MediaPath { "concorde_af.png" } };
 }
+
+std::string AircraftFactory::airline_type(int id)
+{
+    return airlines[id];
+}

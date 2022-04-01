@@ -14,4 +14,5 @@ public:
     AircraftFactory() {};
     std::unique_ptr<Aircraft> create_aircraft(Airport* airport);
     void init_aircraft_types();
+    std::string airline_type(int id);
 };

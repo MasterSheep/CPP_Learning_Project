@@ -11,6 +11,7 @@
 #include <cassert>
 #include <cstdlib>
 #include <ctime>
+#include <string>
 
 using namespace std::string_literals;
 
@@ -52,7 +53,16 @@ void TowerSimulation::create_keystrokes()
                            { GL::ticks_per_sec = GL::ticks_per_sec - (GL::ticks_per_sec == 1u ? 0u : 1u); });
     GL::keystrokes.emplace('p', []() { GL::pause = (GL::pause == true ? false : true); });
     //
-    GL::keystrokes.emplace('&', []() { std::cout << "hey" << std::endl; });
+    for (int i = 1; i <= 8; i++)
+    {
+        GL::keystrokes.emplace('0' + i,
+                               [this, i]()
+                               {
+                                   auto type = aircraft_factory.airline_type(i - 1);
+                                   std::cout << type << " : " << aircraft_manager->countAirelineType(type)
+                                             << std::endl;
+                               });
+    }
 }
 
 void TowerSimulation::display_help() const
