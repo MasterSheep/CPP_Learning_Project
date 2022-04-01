@@ -51,6 +51,8 @@ void TowerSimulation::create_keystrokes()
     GL::keystrokes.emplace('i', []()
                            { GL::ticks_per_sec = GL::ticks_per_sec - (GL::ticks_per_sec == 1u ? 0u : 1u); });
     GL::keystrokes.emplace('p', []() { GL::pause = (GL::pause == true ? false : true); });
+    //
+    GL::keystrokes.emplace('&', []() { std::cout << "hey" << std::endl; });
 }
 
 void TowerSimulation::display_help() const
@@ -58,9 +60,9 @@ void TowerSimulation::display_help() const
     std::cout << "This is an airport tower simulator" << std::endl
               << "the following keysstrokes have meaning:" << std::endl;
 
-    for (const auto& ks_pair : GL::keystrokes)
+    for (const auto& [key, value] : GL::keystrokes)
     {
-        std::cout << ks_pair.first << ' ';
+        std::cout << key << ' ';
     }
 
     std::cout << std::endl;

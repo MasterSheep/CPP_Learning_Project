@@ -1,6 +1,8 @@
 #include "GL/dynamic_object.hpp"
 #include "aircraft.hpp"
 
+#include <algorithm>
+
 class Aircraft;
 
 class AircraftManager : public GL::DynamicObject

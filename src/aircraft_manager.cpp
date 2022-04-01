@@ -7,16 +7,21 @@ void AircraftManager::addAirCraft(std::unique_ptr<Aircraft> aircraft)
 
 bool AircraftManager::move()
 {
-    for (auto iter = aircrafts.begin(); iter != aircrafts.end();)
-    {
-        if ((*iter)->move())
+    aircrafts.erase(
+        std::remove_if(aircrafts.begin(), aircrafts.end(), [](auto const& i) { return i.get()->move(); }),
+        aircrafts.end());
+    /*
+        for (auto iter = aircrafts.begin(); iter != aircrafts.end();)
         {
-            iter = aircrafts.erase(iter);
+            if ((*iter)->move())
+            {
+                iter = aircrafts.erase(iter);
+            }
+            else
+            {
+                ++iter;
+            }
         }
-        else
-        {
-            ++iter;
-        }
-    }
+    */
     return false;
 }
