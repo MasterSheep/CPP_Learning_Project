@@ -64,7 +64,8 @@ struct Point2D
 
 struct Point3D
 {
-    float values[3] {};
+    std::array<float, 3> values {};
+    // float values[3] {};
 
     Point3D() {}
     Point3D(float x, float y, float z) : values { x, y, z } {}
@@ -80,25 +81,22 @@ struct Point3D
 
     Point3D& operator+=(const Point3D& other)
     {
-        x() += other.x();
-        y() += other.y();
-        z() += other.z();
+        std::transform(values.begin(), values.end(), other.values.begin(), values.begin(),
+                       [](float value1, float value2) { return value1 + value2; });
         return *this;
     }
 
     Point3D& operator-=(const Point3D& other)
     {
-        x() -= other.x();
-        y() -= other.y();
-        z() -= other.z();
+        std::transform(values.begin(), values.end(), other.values.begin(), values.begin(),
+                       [](float value1, float value2) { return value1 - value2; });
         return *this;
     }
 
     Point3D& operator*=(const float scalar)
     {
-        x() *= scalar;
-        y() *= scalar;
-        z() *= scalar;
+        std::transform(values.begin(), values.end(), values.begin(),
+                       [scalar](float value) { return value * scalar; });
         return *this;
     }
 

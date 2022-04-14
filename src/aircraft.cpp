@@ -95,6 +95,12 @@ bool Aircraft::move()
         waypoints = control.get_instructions(*this);
     }
 
+    if (fuel == 0)
+    {
+        std::cout << flight_number << " out of fuel" << std::endl;
+        return true;
+    }
+
     if (!is_at_terminal)
     {
         if (waypoints.empty())
@@ -133,6 +139,7 @@ bool Aircraft::move()
         {
             // if we are in the air, but too slow, then we will sink!
             const float speed_len = speed.length();
+            fuel                  = fuel - 1;
             if (speed_len < SPEED_THRESHOLD)
             {
                 pos.z() -= SINK_FACTOR * (SPEED_THRESHOLD - speed_len);
