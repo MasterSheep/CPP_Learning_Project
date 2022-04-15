@@ -1,18 +1,18 @@
 #pragma once
 
 #include "aircraft_factory.hpp"
+#include "aircraft_manager.hpp"
 
 class Airport;
-class AircraftManager;
 class AircraftFactory;
 struct AircraftType;
 
 class TowerSimulation
 {
 private:
-    bool help                         = false;
-    Airport* airport                  = nullptr;
-    AircraftManager* aircraft_manager = nullptr;
+    bool help        = false;
+    Airport* airport = nullptr;
+    AircraftManager aircraft_manager;
     AircraftFactory aircraft_factory;
 
     TowerSimulation(const TowerSimulation&) = delete;

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "GL/dynamic_object.hpp"
 #include "aircraft.hpp"
 
@@ -11,7 +13,6 @@ private:
     std::vector<std::unique_ptr<Aircraft>> aircrafts;
 
 public:
-    AircraftManager() {}
     void addAirCraft(std::unique_ptr<Aircraft> aircraft);
     bool move() override;
     int countAirelineType(std::string type);
