@@ -27,9 +27,6 @@ private:
     // 1. l'attérissage a déjà eu lieu => on ajoute un attribut
     // 2. l'avion a terminé sa course de décollage => waypoints.empty()
     bool is_service_done = false;
-    //
-    bool has_terminal() const;
-    bool is_circling() const;
 
     // turn the aircraft to arrive at the next waypoint
     // try to facilitate reaching the waypoint after the next by facing the
@@ -73,6 +70,11 @@ public:
 
     void display() const override;
     bool move() override;
+    // TASK-2 Obj-2 B
+    bool has_terminal() const;
+    bool is_circling() const;
+    // TASK-2 Obj-2 C
+    int getFuel() const { return fuel; }
 
     friend class Tower;
 };
