@@ -9,9 +9,9 @@ const MediaPath two_lane_airport_sprite_path = { "airport_2lane.png" };
 
 // number of cycles needed to service an aircraft at a terminal
 constexpr unsigned int SERVICE_CYCLES = 40u; // 20u
-
-constexpr unsigned int MAX_FUEL = 3000;
-constexpr unsigned int MIN_FUEL = 150;
+constexpr unsigned int FUEL_NEEDED    = 200;
+constexpr unsigned int MAX_FUEL       = 3000;
+constexpr unsigned int MIN_FUEL       = 150;
 // speeds below the threshold speed loose altitude linearly
 constexpr float SPEED_THRESHOLD = 0.05f;
 // this models the speed with wich slow (speed < SPEED_THRESHOLD) aircrafts sink

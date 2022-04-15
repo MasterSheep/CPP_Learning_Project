@@ -75,6 +75,8 @@ public:
     bool is_circling() const;
     // TASK-2 Obj-2 C
     int getFuel() const { return fuel; }
+    // TASK-2 Obj-2 D
+    bool is_low_on_fuel() const;
 
     friend class Tower;
 };
