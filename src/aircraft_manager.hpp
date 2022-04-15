@@ -10,12 +10,13 @@ class AircraftManager : public GL::DynamicObject
 private:
     std::vector<std::unique_ptr<Aircraft>> aircrafts;
 
-    void sortAircrafts();
-    void printAircrafts();
-
 public:
     AircraftManager() {}
     void addAirCraft(std::unique_ptr<Aircraft> aircraft);
-    bool move();
+    bool move() override;
     int countAirelineType(std::string type);
+
+    void sortAircrafts();
+    void printAircrafts();
+    int get_required_fuel();
 };

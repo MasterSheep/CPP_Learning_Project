@@ -1,5 +1,7 @@
 #include "aircraft_manager.hpp"
 
+#include <numeric>
+
 void AircraftManager::addAirCraft(std::unique_ptr<Aircraft> aircraft)
 {
     aircrafts.emplace_back(std::move(aircraft));
@@ -38,4 +40,17 @@ void AircraftManager::printAircrafts()
     std::for_each(aircrafts.begin(), aircrafts.end(),
                   [](std::unique_ptr<Aircraft>& aircft)
                   { std::cout << "fuel level :" << aircft->getFuel() << std::endl; });
+}
+
+int AircraftManager::get_required_fuel()
+{
+    return accumulate(aircrafts.begin(), aircrafts.end(), 0.0,
+                      [](float sum, const std::unique_ptr<Aircraft>& aircraft)
+                      {
+                          if (aircraft->is_low_on_fuel() && aircraft->is_at_terminal)
+                          {
+                              return sum + (MAX_FUEL - aircraft->fuel);
+                          }
+                          return sum;
+                      });
 }

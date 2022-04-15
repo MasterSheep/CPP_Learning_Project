@@ -79,4 +79,5 @@ public:
     bool is_low_on_fuel() const;
 
     friend class Tower;
+    friend class AircraftManager;
 };
