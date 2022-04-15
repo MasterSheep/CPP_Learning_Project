@@ -22,6 +22,15 @@ private:
     bool is_at_terminal        = false;
     unsigned int fuel;
 
+    // TASK-2 Obj-2 B
+    // L'endroit le plus approprié pour retirer l'avion, c'est lorsque :
+    // 1. l'attérissage a déjà eu lieu => on ajoute un attribut
+    // 2. l'avion a terminé sa course de décollage => waypoints.empty()
+    bool is_service_done = false;
+    //
+    bool has_terminal() const;
+    bool is_circling() const;
+
     // turn the aircraft to arrive at the next waypoint
     // try to facilitate reaching the waypoint after the next by facing the
     // right way to this end, we try to face the point Z on the line spanned by

@@ -97,6 +97,8 @@ bool Aircraft::move()
 
     if (fuel == 0)
     {
+        // if (this->has_terminal())
+        //     this->releaseTerminal();
         std::cout << flight_number << " out of fuel" << std::endl;
         return true;
     }
@@ -140,9 +142,19 @@ bool Aircraft::move()
             // if we are in the air, but too slow, then we will sink!
             const float speed_len = speed.length();
             fuel                  = fuel - 1;
+
             if (speed_len < SPEED_THRESHOLD)
             {
                 pos.z() -= SINK_FACTOR * (SPEED_THRESHOLD - speed_len);
+            }
+
+            if (is_circling())
+            {
+                WaypointQueue way = control.reserve_terminal(*this);
+                if (!way.empty())
+                {
+                    waypoints = std::move(way);
+                }
             }
         }
 
@@ -156,4 +168,14 @@ bool Aircraft::move()
 void Aircraft::display() const
 {
     type.texture.draw(project_2D(pos), { PLANE_TEXTURE_DIM, PLANE_TEXTURE_DIM }, get_speed_octant());
+}
+
+bool Aircraft::has_terminal() const
+{
+    return !waypoints.empty() && waypoints.back().is_at_terminal();
+}
+
+bool Aircraft::is_circling() const
+{
+    return !is_service_done && !is_on_ground() && !has_terminal();
 }
