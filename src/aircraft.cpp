@@ -184,3 +184,21 @@ bool Aircraft::is_low_on_fuel() const
 {
     return fuel < FUEL_NEEDED;
 }
+
+bool Aircraft::refill(int& fuel_stock)
+{
+    int reserve = MAX_FUEL - fuel;
+    if (reserve > fuel_stock)
+    {
+        fuel += fuel_stock;
+        reserve    = fuel_stock;
+        fuel_stock = 0;
+    }
+    else
+    {
+        fuel += reserve;
+        fuel_stock -= reserve;
+    }
+    std::cout << flight_number << " replenishment with :" << reserve << " fuels" << std::endl;
+    return fuel == MAX_FUEL;
+}

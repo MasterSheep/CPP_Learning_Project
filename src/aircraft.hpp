@@ -77,6 +77,7 @@ public:
     int getFuel() const { return fuel; }
     // TASK-2 Obj-2 D
     bool is_low_on_fuel() const;
+    bool refill(int& fuel_stock);
 
     friend class Tower;
     friend class AircraftManager;
