@@ -22,6 +22,7 @@ std::unique_ptr<Aircraft> AircraftFactory::create_aircraft(Airport* airport)
 // our own init here
 void AircraftFactory::init_aircraft_types()
 {
+    assert(airlines);
     aircraft_types[0] = new AircraftType { .02f, .05f, .02f, MediaPath { "l1011_48px.png" } };
     aircraft_types[1] = new AircraftType { .02f, .05f, .02f, MediaPath { "b707_jat.png" } };
     aircraft_types[2] = new AircraftType { .02f, .10f, .02f, MediaPath { "concorde_af.png" } };

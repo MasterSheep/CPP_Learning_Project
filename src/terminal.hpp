@@ -32,6 +32,7 @@ public:
 
     void finish_service()
     {
+        assert(current_aircraft);
         if (!is_servicing())
         {
             std::cout << "done servicing " << current_aircraft->get_flight_num() << '\n';
