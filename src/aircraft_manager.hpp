@@ -19,5 +19,5 @@ public:
 
     void sortAircrafts();
     void printAircrafts();
-    int get_required_fuel();
+    int get_required_fuel() const;
 };

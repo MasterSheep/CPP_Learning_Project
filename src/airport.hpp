@@ -25,7 +25,7 @@ private:
     int fuel_stock       = 0;
     int ordered_fuel     = 0;
     int next_refill_time = 0;
-    AircraftManager& manager;
+    const AircraftManager& manager;
 
     // reserve a terminal
     // if a terminal is free, return
@@ -74,8 +74,31 @@ public:
 
     bool move() override
     {
+        /*
         for (auto& t : terminals)
         {
+            t.move();
+        }
+        */
+
+        if (next_refill_time == 0)
+        {
+            assert(ordered_fuel >= 0);
+            std::cout << "Received " << ordered_fuel << "L of fuel" << std::endl;
+            std::cout << "Current fuel stock: " << fuel_stock << std::endl;
+            fuel_stock += ordered_fuel;
+            assert(fuel_stock >= 0);
+            std::cout << "New fuel stock: " << fuel_stock << std::endl;
+            ordered_fuel     = std::min(manager.get_required_fuel(), 5000);
+            next_refill_time = 100;
+        }
+        else
+        {
+            next_refill_time--;
+        }
+        for (auto& t : terminals)
+        {
+            t.refill_aircraft_if_needed(fuel_stock);
             t.move();
         }
 

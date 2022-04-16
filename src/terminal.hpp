@@ -50,8 +50,12 @@ public:
 
     void refill_aircraft_if_needed(int& fuel_stock)
     {
-        if (current_aircraft == nullptr || !is_servicing() || !current_aircraft->is_low_on_fuel())
+        assert(fuel_stock >= 0);
+        if (!in_use())
             return;
-        (*current_aircraft).refill(fuel_stock);
+        if (current_aircraft->is_low_on_fuel())
+        {
+            current_aircraft->refill(fuel_stock);
+        }
     }
 };

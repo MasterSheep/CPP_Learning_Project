@@ -97,8 +97,6 @@ bool Aircraft::move()
 
     if (fuel == 0)
     {
-        // if (this->has_terminal())
-        //     this->releaseTerminal();
         std::cout << flight_number << " out of fuel" << std::endl;
         return true;
     }
@@ -141,7 +139,7 @@ bool Aircraft::move()
         {
             // if we are in the air, but too slow, then we will sink!
             const float speed_len = speed.length();
-            fuel                  = fuel - 1;
+            fuel--;
 
             if (speed_len < SPEED_THRESHOLD)
             {
@@ -185,20 +183,11 @@ bool Aircraft::is_low_on_fuel() const
     return fuel < FUEL_NEEDED;
 }
 
-bool Aircraft::refill(int& fuel_stock)
+void Aircraft::refill(int& fuel_stock)
 {
-    int reserve = MAX_FUEL - fuel;
-    if (reserve > fuel_stock)
-    {
-        fuel += fuel_stock;
-        reserve    = fuel_stock;
-        fuel_stock = 0;
-    }
-    else
-    {
-        fuel += reserve;
-        fuel_stock -= reserve;
-    }
-    std::cout << flight_number << " replenishment with :" << reserve << " fuels" << std::endl;
-    return fuel == MAX_FUEL;
+    assert(fuel_stock >= 0);
+    auto needed_fuel = std::min(MAX_FUEL - fuel, fuel_stock);
+    fuel += needed_fuel;
+    fuel_stock -= needed_fuel;
+    std::cout << flight_number << " replenishment with :" << needed_fuel << " fuels" << std::endl;
 }

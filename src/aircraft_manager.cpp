@@ -38,18 +38,20 @@ void AircraftManager::sortAircrafts()
 void AircraftManager::printAircrafts()
 {
     std::for_each(aircrafts.begin(), aircrafts.end(),
-                  [](std::unique_ptr<Aircraft>& aircft)
-                  { std::cout << "fuel level :" << aircft->getFuel() << std::endl; });
+                  [](std::unique_ptr<Aircraft>& aircraft) {
+                      std::cout << aircraft->has_terminal() << " fuel level : " << aircraft->getFuel()
+                                << std::endl;
+                  });
 }
 
-int AircraftManager::get_required_fuel()
+int AircraftManager::get_required_fuel() const
 {
-    return accumulate(aircrafts.begin(), aircrafts.end(), 0.0,
-                      [](float sum, const std::unique_ptr<Aircraft>& aircraft)
+    return accumulate(aircrafts.begin(), aircrafts.end(), 0,
+                      [](unsigned int sum, const std::unique_ptr<Aircraft>& targ)
                       {
-                          if (aircraft->is_low_on_fuel() && aircraft->is_at_terminal)
+                          if (targ->is_low_on_fuel() && !targ->is_service_done)
                           {
-                              return sum + (MAX_FUEL - aircraft->fuel);
+                              return sum + (MAX_FUEL - targ->fuel);
                           }
                           return sum;
                       });

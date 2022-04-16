@@ -63,6 +63,8 @@ void TowerSimulation::create_keystrokes()
                                              << std::endl;
                                });
     }
+    //
+    GL::keystrokes.emplace('l', [this]() { aircraft_manager.printAircrafts(); });
 }
 
 void TowerSimulation::display_help() const

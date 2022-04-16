@@ -20,7 +20,7 @@ private:
     Tower& control;
     bool landing_gear_deployed = false; // is the landing gear deployed?
     bool is_at_terminal        = false;
-    unsigned int fuel;
+    int fuel;
 
     // TASK-2 Obj-2 B
     // L'endroit le plus approprié pour retirer l'avion, c'est lorsque :
@@ -77,7 +77,7 @@ public:
     int getFuel() const { return fuel; }
     // TASK-2 Obj-2 D
     bool is_low_on_fuel() const;
-    bool refill(int& fuel_stock);
+    void refill(int& fuel_stock);
 
     friend class Tower;
     friend class AircraftManager;
