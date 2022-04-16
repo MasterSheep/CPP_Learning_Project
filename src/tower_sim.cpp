@@ -65,6 +65,7 @@ void TowerSimulation::create_keystrokes()
     }
     //
     GL::keystrokes.emplace('l', [this]() { aircraft_manager.printAircrafts(); });
+    GL::keystrokes.emplace('m', [this]() { aircraft_manager.coutCrashed(); });
 }
 
 void TowerSimulation::display_help() const

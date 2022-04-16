@@ -11,6 +11,7 @@ class AircraftManager : public GL::DynamicObject
 {
 private:
     std::vector<std::unique_ptr<Aircraft>> aircrafts;
+    long crashs = 0;
 
 public:
     void addAirCraft(std::unique_ptr<Aircraft> aircraft);
@@ -20,4 +21,5 @@ public:
     void sortAircrafts();
     void printAircrafts();
     int get_required_fuel() const;
+    void coutCrashed() const;
 };

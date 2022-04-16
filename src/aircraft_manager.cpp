@@ -11,10 +11,20 @@ bool AircraftManager::move()
 {
     sortAircrafts();
 
-    aircrafts.erase(
-        std::remove_if(aircrafts.begin(), aircrafts.end(), [](auto const& i) { return i.get()->move(); }),
-        aircrafts.end());
-    return false;
+    const auto& pred = [this](const auto& item)
+    {
+        try
+        {
+            return item->move();
+        } catch (const AircraftCrash& err)
+        {
+            std::cerr << err.what() << std::endl;
+            crashs++;
+            return true;
+        }
+    };
+    aircrafts.erase(std::remove_if(aircrafts.begin(), aircrafts.end(), pred), aircrafts.end());
+    return true;
 }
 
 int AircraftManager::countAirelineType(std::string type)
@@ -55,4 +65,9 @@ int AircraftManager::get_required_fuel() const
                           }
                           return sum;
                       });
+}
+
+void AircraftManager::coutCrashed() const
+{
+    std::cout << crashs << " aircrafts crashed" << std::endl;
 }

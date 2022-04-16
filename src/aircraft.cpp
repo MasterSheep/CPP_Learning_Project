@@ -97,8 +97,8 @@ bool Aircraft::move()
 
     if (fuel == 0)
     {
-        std::cout << flight_number << " out of fuel" << std::endl;
-        return true;
+        //
+        throw AircraftCrash { flight_number + " out of fuel" };
     }
 
     if (!is_at_terminal)
